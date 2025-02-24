@@ -1,0 +1,31 @@
+# Hadoop是什么
+
+分布式系统基础架构，解决海量数据存储和海量数据分析计算问题
+
+# Hadoop 1.x 2.x 3.x的区别
+
+![](D:\学习笔记\大数据\pictures\Snipaste_2024-12-03_21-48-36.png)
+
+# HDFS架构概述
+
+分布式文件系统
+
+![](D:\学习笔记\大数据\pictures\Snipaste_2024-12-03_21-54-33.png)
+
+# YARN架构概述
+
+Yet Another Resource Negotiator简称YARN ，另一种资源协调者，是Hadoop的**资源管理器**。
+
+![](D:\学习笔记\大数据\pictures\Snipaste_2024-12-03_22-01-25.png)
+
+# MapReduce架构概述
+
+1）Map阶段并行处理输入数据
+
+2）Reduce阶段对Map结果进行汇总
+
+![](D:\学习笔记\大数据\pictures\Snipaste_2024-12-03_22-02-50.png)
+
+# 大数据技术生态体系
+
+![](D:\学习笔记\大数据\pictures\Snipaste_2024-12-03_22-08-47.png)
