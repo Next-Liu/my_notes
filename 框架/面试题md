@@ -51,11 +51,11 @@
 
 自动装配的实现主要依靠三个核心的关键技术：
 
- 	1.引入starter，引入第三方依赖组件时，需包含一个@Configuration配置类，这个配置类中通过@Bean声明装载到IOC容器中的对象 
-
-​	 2.这个配置类在第三方jar包里，通过SpringBoot的约定优于配置的理念把这个类的全路径放在classpath:/META-INF/spring.factories文件下
-
-​	 3.在拿到第三方声明的配置类后，使用ImportSelector接口动态加载扫描到的配置类
+```java
+1.引入starter，引入第三方依赖组件时，需包含一个@Configuration配置类，这个配置类中通过@Bean声明装载到IOC容器中的对象 
+2.这个配置类在第三方jar包里，通过SpringBoot的约定优于配置的理念把这个类的全路径放在classpath:/META-INF/spring.factories文件下
+3.在拿到第三方声明的配置类后，使用ImportSelector接口动态加载扫描到的配置类
+```
 
 ## 4.IOC和AOP
 
@@ -308,3 +308,7 @@ CGlib：**通过继承目标类实现业务增强**，此时目标类（业务�
   }
   ```
 
+## 9.如何理解SpringBoot中的Starter
+
+starter就是一个jar包，写一个@Configuration的配置类，将这些bean定义在其中，然后再starter包的META-INF/spring.factories中写入配置类，那么springboot程序在启动的时候就会按照约定来加载该配置类
+开发人员只需要将相应的starter包依赖进应用中，进行相关的属性配置，就可以进行代码开发，而不需要单独进行bean对象的配置
