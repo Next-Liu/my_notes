@@ -256,7 +256,7 @@ SendCallback 是消息发送结果回调。如果：sendResult.getSendStatus() =
 
 ## 10.RocketMQ会丢失消息吗，丢失消息怎么处理
 
-#### **生产者丢失消息**
+### **生产者丢失消息**
 
 - **原因**：
   - 生产者发送消息时，网络异常或 Broker 宕机，导致消息未成功发送到 Broker。
