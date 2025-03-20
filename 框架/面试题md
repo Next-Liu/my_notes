@@ -312,3 +312,76 @@ CGlib：**通过继承目标类实现业务增强**，此时目标类（业务�
 
 starter就是一个jar包，写一个@Configuration的配置类，将这些bean定义在其中，然后再starter包的META-INF/spring.factories中写入配置类，那么springboot程序在启动的时候就会按照约定来加载该配置类
 开发人员只需要将相应的starter包依赖进应用中，进行相关的属性配置，就可以进行代码开发，而不需要单独进行bean对象的配置
+
+## 10.ExceptionHandler
+
+#### (1) 控制器方法抛出异常
+
+- 当控制器方法执行时，如果发生异常，Spring 会捕获该异常并开始处理。
+
+#### **(2) 查找 `@ExceptionHandler` 方法**
+
+- Spring 会查找当前控制器中是否有 `@ExceptionHandler` 注解的方法，该方法可以处理抛出的异常。
+- **如果当前控制器中没有匹配的 `@ExceptionHandler` 方法，Spring 会继续查找 `@ControllerAdvice` 注解的全局异常处理类。**
+
+#### **(3) 匹配异常类型**
+
+- Spring 会检查 `@ExceptionHandler` 方法的参数类型，判断是否能够处理抛出的异常。
+- 如果方法的参数类型与抛出的异常类型匹配（包括子类），则调用该方法。
+
+#### **(4) 执行 `@ExceptionHandler` 方法**
+
+- 调用匹配的 `@ExceptionHandler` 方法，执行异常处理逻辑。
+- 该方法可以返回一个 `ResponseEntity` 或 `ModelAndView`，用于生成 HTTP 响应。
+
+#### **(5) 返回响应**
+
+- 将 `@ExceptionHandler` 方法的返回值转换为 HTTP 响应，返回给客户端
+- `ResponseEntity`：用于生成自定义的 HTTP 响应。
+- `ModelAndView`：用于生成视图和模型数据。
+- `String`：表示视图名称。
+
+**控制器中的@ExceptionHandler**
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api")
+public class MyController {
+
+    @GetMapping("/test")
+    public String test() {
+        throw new RuntimeException("Test exception");
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return new ResponseEntity<>("Caught exception: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+```
+
+ **全局异常处理 `@ControllerAdvice`**
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return new ResponseEntity<>("Global exception: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+```
+
